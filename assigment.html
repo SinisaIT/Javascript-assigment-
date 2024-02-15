@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Računarska Operacija</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Računarska Operacija</h1>
+    <div id="result"></div>
+    <button onclick="openModal('first')">Unesi prvi broj</button>
+    <button onclick="openModal('operation')">Unesi operaciju</button>
+    <button onclick="openModal('second')">Unesi drugi broj</button>
+    <button onclick="calculate()">Izvrši računanje</button>
+
+    <div id="firstModal" class="modal">
+        <div class="modal-content">
+            <span onclick="closeModal('first')" class="close">&times;</span>
+            <p>Unesi prvi broj:</p>
+            <input type="number" id="firstNumber">
+            <button onclick="closeModal('first')">Snimi</button>
+        </div>
+    </div>
+
+    <div id="operationModal" class="modal">
+        <div class="modal-content">
+            <span onclick="closeModal('operation')" class="close">&times;</span>
+            <p>Unesi operaciju (+, -, *, /):</p>
+            <input type="text" id="operation" maxlength="1">
+            <button onclick="closeModal('operation')">Snimi</button>
+        </div>
+    </div>
+
+    <div id="secondModal" class="modal">
+        <div class="modal-content">
+            <span onclick="closeModal('second')" class="close">&times;</span>
+            <p>Unesi drugi broj:</p>
+            <input type="number" id="secondNumber">
+            <button onclick="closeModal('second')">Snimi</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId + 'Modal').style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId + 'Modal').style.display = 'none';
+        }
+
+        function calculate() {
+            const firstNumber = parseFloat(document.getElementById('firstNumber').value);
+            const operation = document.getElementById('operation').value;
+            const secondNumber = parseFloat(document.getElementById('secondNumber').value);
+
+            let result;
+
+            switch (operation) {
+                case '+':
+                    result = firstNumber + secondNumber;
+                    break;
+                case '-':
+                    result = firstNumber - secondNumber;
+                    break;
+                case '*':
+                    result = firstNumber * secondNumber;
+                    break;
+                case '/':
+                    if (secondNumber === 0) {
+                        alert('Djeljenje s nulom nije definisano.');
+                        return;
+                    }
+                    result = firstNumber / secondNumber;
+                    break;
+                default:
+                    alert('Pogrešna operacija.');
+                    return;
+            }
+
+            document.getElementById('result').innerHTML = 'Rezultat: ' + result;
+        }
+    </script>
+</body>
+</html>
